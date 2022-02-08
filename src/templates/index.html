@@ -17,22 +17,22 @@
 </head>
 <body>
   <div class="container">
-    <h2>Type your query..</h2>
+    <h2>Search</h2>
     <br>
-    <select class="js-data-example-ajax form-control"></select>
+    <select class="form-control" multiple="true" id="search"></select>
   </div>
 
   <script>
-    $('.js-data-example-ajax').select2({
-      ajax: {
-        url: 'http://127.0.0.1:5000/process_search',
-        dataType: 'json'
-      },
-      templateResult: function(e) { return e.name; },
-      templateSelection: function(e) { return e.name; },
-      minimumInputLength:3
-
+    $('#search').select2({
+        ajax: {
+          url: 'http://127.0.0.1:5000/process_search',
+          dataType: 'json'
+        },
+        templateResult: function(e) { return e.name; },
+        templateSelection: function(e) { return e.name; },
+        minimumInputLength: 3,
     });
+
   </script>
 </body>
 </html>
