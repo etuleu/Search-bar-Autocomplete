@@ -17,7 +17,7 @@ with open('../data/test_data_sample.csv', 'r') as csvFile:
         full_name += w[0].lower()
         if len(w) > 1:
             middle_name_root.add_word(w[1].lower(),index_in_list=counter)
-            full_name += w[1].lower() 
+            full_name += w[1].lower()
         if len(w) > 2:
             last_name_root.add_word(w[2].lower(),index_in_list=counter)
             full_name += w[2].lower()
@@ -31,7 +31,7 @@ def getName(index):
     for i in range(0,l):
         name = name + " " + word_list[index][i]
     return name.strip()
-    
+
 
 def convert_into_list_of_dict(list_of_names):
     result=[]
@@ -43,12 +43,12 @@ def convert_into_list_of_dict(list_of_names):
 def get_from_trie(root, query):
     index_list = root.auto_complete_word(query.lower())
     name_list = [getName(i) for i in index_list]
-    name_list.sort(lambda x,y: cmp(len(x), len(y)))
+    name_list.sort(key=len)
     return name_list
 
 
 def get_results(query):
-    
+
     full_name_result = get_from_trie(full_name_root, query)
     middle_name_result = get_from_trie(middle_name_root, query)
     last_name_result = get_from_trie(last_name_root, query)
@@ -57,10 +57,9 @@ def get_results(query):
 
 
 def process_term(query):
-    # If search term consists if spaces then 
+    # If search term consists if spaces then
     name_list = query.split(' ')
     result = ""
     for name in name_list:
         result = result + name.lower()
     return result
-
