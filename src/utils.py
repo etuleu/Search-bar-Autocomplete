@@ -1,28 +1,47 @@
 import trie
 import csv
+
 word_list = []
 
 full_name_root = trie.Node()
 middle_name_root = trie.Node()
 last_name_root = trie.Node()
 
-with open('../data/test_data_sample.csv', 'r') as csvFile:
-    reader = csv.reader(csvFile)
-    counter=0
-    for w in reader:
-        full_name = ""
-        word_list.append(w)
-        #print("Added : " + w[0] + "Index in list : " + str(counter))
-        #first_name_root.add_word(w[0].lower(),index_in_list=counter)
-        full_name += w[0].lower()
-        if len(w) > 1:
-            middle_name_root.add_word(w[1].lower(),index_in_list=counter)
-            full_name += w[1].lower()
-        if len(w) > 2:
-            last_name_root.add_word(w[2].lower(),index_in_list=counter)
-            full_name += w[2].lower()
-        full_name_root.add_word(full_name, index_in_list=counter)
-        counter+=1
+def load_firm_names(path):
+    with open(path, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        counter = 0
+        for row in reader:
+            name = row["primary_business_name"]
+            if counter < 10:
+                print(name)
+            # TODO: handle multiple words
+            word_list.append([name])
+            full_name_root.add_word(name.lower(), index_in_list=counter)
+            counter += 1
+
+
+def load_test_data():
+    with open('../data/test_data_sample.csv', 'r') as csvFile:
+        reader = csv.reader(csvFile)
+        counter=0
+        for w in reader:
+            full_name = ""
+            word_list.append(w)
+            #print("Added : " + w[0] + "Index in list : " + str(counter))
+            #first_name_root.add_word(w[0].lower(),index_in_list=counter)
+            full_name += w[0].lower()
+            if len(w) > 1:
+                middle_name_root.add_word(w[1].lower(),index_in_list=counter)
+                full_name += w[1].lower()
+            if len(w) > 2:
+                last_name_root.add_word(w[2].lower(),index_in_list=counter)
+                full_name += w[2].lower()
+            full_name_root.add_word(full_name, index_in_list=counter)
+            counter+=1
+
+
+load_firm_names('../data/firm-names.csv')
 
 
 def getName(index):
